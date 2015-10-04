@@ -82,7 +82,7 @@
 @section('scripts')
 <script>
 window.setTimeout(function () {
-    $('#loginmsg').toggle(1000);
+    $('#loginmsg').slideUp(600);
 }, 5000);
 </script>
 @stop
