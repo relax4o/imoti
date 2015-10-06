@@ -41,38 +41,34 @@
 @section('content')
 
 @if ( session('hstatus') )
-    <div class="alert alert-{{ session('hstatus') }}" id="loginmsg" style="margin-bottom: 0; text-align: center;">
+    <div class="alert alert-{{ session('hstatus') }}" id="registermsg" style="margin-bottom: 0; text-align: center;">
         <strong>{{ session('message') }}</strong>
     </div>
 @endif
 <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
    	<div class="widget clearfix">
         <div class="title">
-            <h3>Вход</h3>
+            <h3>Регистрация</h3>
         </div>
-        <form id="loginform" method="post" name="loginform" action="{{ url('/login') }}">
+        <form id="registerform" method="post" name="registerform" action="{{ url('/register') }}">
             {!! csrf_field() !!}
             <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                    <input type="text" class="form-control" placeholder="Потребителско име или е-mail" autofocus name="username" value="{{ old('username') }}">
-                </div>
+                <input type="text" class="form-control" placeholder="First name">
             </div>
             <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                    <input type="password" class="form-control" placeholder="Парола" name="password">
-                </div>
+                <input type="text" class="form-control" placeholder="Last name">
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label> 
-                        <input type="checkbox" name="remember"> Запомни ме!
-                    </label>
-                </div>
+                <input type="email" class="form-control" placeholder="Email">
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Влез">
+                <input type="password" class="form-control" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Re-enter password">
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Изпрати">
             </div>
         </form>
     </div>
@@ -81,6 +77,6 @@
 
 @section('scripts')
 <script>
-$('#loginmsg').delay(5000).slideUp(600);
+$('#registermsg').delay(5000).slideUp(600);
 </script>
 @stop

@@ -12,7 +12,7 @@
                             <div class="title">
                                 <h3>Вход</h3>
                             </div>
-                            <form id="loginform" method="post" name="loginform" action="/login">
+                            <form id="loginform" method="post" name="loginform" action="{{ url('/login') }}">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <div class="input-group">
@@ -60,7 +60,7 @@
                             <div class="title">
                                 <h3>Регистрация</h3>
                             </div>
-                            <form id="registerform" method="post" name="registerform" action="#">
+                            <form id="registerform" method="post" name="registerform" action="{{ url('/register') }}">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="First name">
@@ -130,8 +130,8 @@
         <strong>{{ session('message') }}</strong>
     </div>
     <script>
-    window.setTimeout(function () {
-        $('#loginmsg').slideUp(600);
-    }, 5000);
+    window.onload = function () {
+        $('#loginmsg').delay(5000).slideUp(600);
+    };
     </script>
 @endif

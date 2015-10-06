@@ -47,7 +47,9 @@ class AccountController extends Controller
         }
 
         // failed login - redirecting to login page with error message
-        return redirect('/login')->with(['hstatus' => 'danger', 'message' => 'Грешни потребителко име или парола. Моля, опитайте отново!']);
+        return redirect('/login')
+                ->with(['hstatus' => 'danger', 'message' => 'Грешни потребителко име или парола. Моля, опитайте отново!'])
+                ->withInput();
     }
 
     public function getLogout() {
@@ -61,5 +63,16 @@ class AccountController extends Controller
         Auth::logout();
 
         return redirect('/');
+    }
+
+    public function getRegister() {
+        if  ( Auth::check() )
+            return redirect()->intended('profile');
+
+        return view('pages.register');
+    }
+
+    public function postRegister() {
+        
     }
 }
