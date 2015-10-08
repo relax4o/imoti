@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use Input, Auth;
+use Input;
+use Auth;
+use Validator;
 
 class AccountController extends Controller
 {
@@ -40,7 +42,7 @@ class AccountController extends Controller
 
             // Log in success - set the current account as online status
             $user = User::find(Auth::user()->id);
-            $user->online = 1;
+            $user->set('online', 1);
             $user->save();
 
             return redirect('/')->with(['status' => 'success', 'message' => 'Вие влязохте успешно в акаунта си!']);
@@ -56,7 +58,7 @@ class AccountController extends Controller
 
         // Set the current account as offline status
         $user = User::find(Auth::user()->id);
-        $user->online = 0;
+        $user->set('online', 0);
         $user->save();
 
         // Logout proceed
@@ -65,6 +67,8 @@ class AccountController extends Controller
         return redirect('/');
     }
 
+
+    /** GET REGISTER */
     public function getRegister() {
         if  ( Auth::check() )
             return redirect()->intended('profile');
@@ -72,7 +76,42 @@ class AccountController extends Controller
         return view('pages.register');
     }
 
-    public function postRegister() {
-        
+    /** POST REGISTER */
+    public function postRegister(Request $request) {
+
+        // if we're logged in we dismiss this action
+        if ( Auth::check() )
+            return redirect('/');
+      
+        $validator = Validator::make($request->all(), [
+                'username' => 'required|max:50|unique:accounts',
+                'display_name' => 'required|max:50',
+                'email' => 'required|email|max:60|unique:accounts',
+                'password' => 'required|min:6|max:20',
+                'confirm_password' => 'same:password'
+        ]);
+
+        if ( $validator->fails() ) {
+            return redirect('/register')
+                    ->withErrors($validator->messages())
+                    ->withInput($request->except('password', 'confirm_password'));
+        }
+
+
+        $user = new User();
+        $user->set([
+            'username' => $request->get('username'),
+            'password' => bcrypt($request->get('password')),
+            'email' => $request->get('email'),
+            'display_name' => $request->get('display_name')
+        ]);
+        $user->save();
+
+        return redirect('/login')
+                ->withInput($request->only('username'))
+                ->with([
+                    'hstatus' => 'success',
+                    'message' => 'Вие се регистрирахте успешно! Можете да влезете в акаунта си!'
+                ]);
     }
 }
