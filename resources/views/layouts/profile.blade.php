@@ -29,6 +29,7 @@
     	</div>
 	</div>
 	@include('includes.profile.scripts')
+    @yield('scripts')
     </body>
 
 <!-- Mirrored from avenxo.kaijuthemes.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 20 Jul 2015 10:47:40 GMT -->

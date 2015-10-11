@@ -43,5 +43,3 @@
 <script type="text/javascript" src="{{ asset('/assets/profile/plugins/easypiechart/jquery.easypiechart.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/assets/profile/plugins/fullcalendar/moment.min.js') }}"></script> 		 			<!-- Moment.js Dependency -->
 <script type="text/javascript" src="{{ asset('/assets/profile/plugins/fullcalendar/fullcalendar.min.js') }}"></script>   			<!-- Calendar Plugin -->
-
-<script type="text/javascript" src="{{ asset('/assets/profile/demo/demo-index.js') }}"></script>

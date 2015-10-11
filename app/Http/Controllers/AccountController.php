@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
-use Input;
+use App\Profile;
 use Auth;
 use Validator;
 
@@ -21,27 +21,27 @@ class AccountController extends Controller
         return view('pages.login');
     }
 
-    public function postLogin() {
+    public function postLogin(Request $req) {
 
         // if we are already logged in - we prevent to proceed this again
         if ( Auth::check() ) 
             return redirect('/');
 
         // check whether the user is using username or email to login
-        $field = filter_var(Input::get('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $field = filter_var($req->get('username'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         
         $user = [
-            $field => Input::get('username'),
-            'password' => Input::get('password'),
+            $field => $req->get('username'),
+            'password' => $req->get('password'),
             'active' => 1
         ];
 
-        $remember = Input::get('remember');
+        $remember = $req->get('remember');
 
         if  ( Auth::attempt($user, $remember) ) {
 
             // Log in success - set the current account as online status
-            $user = User::find(Auth::user()->id);
+            $user = User::find(Auth::user()->account_id);
             $user->set('online', 1);
             $user->save();
 
@@ -57,7 +57,7 @@ class AccountController extends Controller
     public function getLogout() {
 
         // Set the current account as offline status
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::user()->account_id);
         $user->set('online', 0);
         $user->save();
 
@@ -77,38 +77,43 @@ class AccountController extends Controller
     }
 
     /** POST REGISTER */
-    public function postRegister(Request $request) {
+    public function postRegister(Request $req) {
 
         // if we're logged in we dismiss this action
         if ( Auth::check() )
             return redirect('/');
       
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make($req->all(), [
                 'username' => 'required|max:50|unique:accounts',
                 'display_name' => 'required|max:50',
                 'email' => 'required|email|max:60|unique:accounts',
-                'password' => 'required|min:6|max:20',
-                'confirm_password' => 'same:password'
+                'password' => 'required|min:6|max:20|different:username',
+                'confirm_password' => 'required|same:password',
+                'entity_type' => 'required'
         ]);
 
         if ( $validator->fails() ) {
             return redirect('/register')
                     ->withErrors($validator->messages())
-                    ->withInput($request->except('password', 'confirm_password'));
+                    ->withInput($req->except('password', 'confirm_password'));
         }
 
 
         $user = new User();
         $user->set([
-            'username' => $request->get('username'),
-            'password' => bcrypt($request->get('password')),
-            'email' => $request->get('email'),
-            'display_name' => $request->get('display_name')
+            'username' => $req->get('username'),
+            'password' => $req->get('password'),
+            'email' => $req->get('email'),
+            'is_agency' => $req->get('entity_type')
         ]);
         $user->save();
 
+        $profile = new Profile();
+        $profile->display_name = $req->get('display_name');
+        $user->profiles()->save($profile);
+
         return redirect('/login')
-                ->withInput($request->only('username'))
+                ->withInput($req->only('username'))
                 ->with([
                     'hstatus' => 'success',
                     'message' => 'Вие се регистрирахте успешно! Можете да влезете в акаунта си!'

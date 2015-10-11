@@ -523,3 +523,7 @@
     </div>
 </div> <!-- .container-fluid --> 
 @stop
+
+@section('scripts')
+<script type="text/javascript" src="{{ asset('/assets/profile/demo/demo-index.js') }}"></script>
+@stop

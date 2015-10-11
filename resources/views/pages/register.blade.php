@@ -72,6 +72,14 @@
                 <input type="password" class="form-control" placeholder="{{ trans('auth.ph_confirm_password') }}" name="confirm_password">
             </div>
             <div class="form-group">
+                <label class="radio-inline">
+                    <input type="radio" name="entity_type" value="0"> {{ trans('auth.ph_individual_entity') }}
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="entity_type" value="1"> {{ trans('auth.ph_legal_entity') }}
+                </label>
+            </div>
+            <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="{{ trans('auth.btn_send') }}">
             </div>
         </form>

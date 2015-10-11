@@ -14,6 +14,8 @@ return [
     'ph_confirm_password' => 'Потвърди парола',
     'ph_display_name' => 'Представително име',
     'ph_srch_prop_id_name' => 'Търси по номер на обява или име...',
+    'ph_individual_entity' => 'Собственик',
+    'ph_legal_entity' => 'Агенция',
 
     /** BUTTONS */
     'btn_send' => 'Изпрати',

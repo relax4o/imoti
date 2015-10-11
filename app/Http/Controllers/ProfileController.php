@@ -19,6 +19,10 @@ class ProfileController extends Controller
         return view('profile');
     }
 
+    public function settings() {
+        return view('pages.settings');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

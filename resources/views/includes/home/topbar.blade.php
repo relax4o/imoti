@@ -1,5 +1,5 @@
 <!-- Login modal form -->
-<div class="modal fade" id="LoginFormModal" tabindex="-1" role="dialog" aria-labelledby="LoginFormModalLabel" aria-hidden="true">
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="LoginFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="border-bottom: none;">
@@ -47,7 +47,7 @@
 </div><!-- /.modal -->
 
 <!-- Register modal form -->
-<div class="modal fade" id="RegisterFormModal" tabindex="-1" role="dialog" aria-labelledby="RegisterFormModalLabel" aria-hidden="true">
+<div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="RegisterFormModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header" style="border-bottom: none;">
@@ -78,6 +78,14 @@
                                     <input type="password" class="form-control" placeholder="{{ trans('auth.ph_confirm_password') }}" name="confirm_password">
                                 </div>
                                 <div class="form-group">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="entity_type" value="0"> {{ trans('auth.ph_individual_entity') }}
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="entity_type" value="1"> {{ trans('auth.ph_legal_entity') }}
+                                    </label>
+                                </div>
+                                <div class="form-group">
                                     <input type="submit" class="btn btn-primary" value="{{ trans('auth.btn_send') }}">
                                 </div>
                             </form>
@@ -102,16 +110,19 @@
                     @if(!Auth::check())
                         <ul class="topmenu pull-right">
                             <li>
-                                <a href="#LoginFormModal" data-toggle="modal"><i class="fa fa-sign-in"></i> {{ trans('common.login') }}</a> 
+                                <a href="#login" data-toggle="modal"><i class="fa fa-sign-in"></i> {{ trans('common.login') }}</a> 
                             </li>
                             <li>
-                                <a href="#RegisterFormModal" data-toggle="modal"><i class="fa fa-angle-double-right"></i> {{ trans('common.register') }}</a>
+                                <a href="#register" data-toggle="modal"><i class="fa fa-angle-double-right"></i> {{ trans('common.register') }}</a>
                             </li>
                         </ul><!-- topmenu -->
                     @else
                         <ul class="topmenu pull-right">
                             <li>
-                                <a href="/profile/dashboard"><i class="fa fa-user"></i> {{ auth()->user()->get('display_name') }}</a> 
+                                <a href="/profile/dashboard">
+                                    <i class="fa fa-user"></i> 
+                                    {{ auth()->user()->profiles->display_name }}
+                                </a> 
                             </li>
                             <li>
                                 <a href="/logout"><i class="fa fa-sign-out"></i> {{ trans('common.logout') }}</a> 
