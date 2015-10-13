@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Profile;
+use App\User;
 
 class ProfileController extends Controller
 {
+
+    public function __construct() {
+        return redirect('/profile/dashboard');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +26,16 @@ class ProfileController extends Controller
     }
 
     public function settings() {
-        return view('pages.settings');
+        return view('pages.profile.settings');
+    }
+
+    public function about() {
+        $data = Profile::find(auth()->user()->get('account_id'));
+
+        /**
+        TODO: Довърши страницата about
+        */
+        return view('pages.profile.about')->with('data', $data);
     }
 
     /**

@@ -18,7 +18,7 @@ class AccountController extends Controller
         if ( Auth::check() )
             return redirect('/');
 
-        return view('pages.login');
+        return view('pages.home.login');
     }
 
     public function postLogin(Request $req) {
@@ -73,7 +73,7 @@ class AccountController extends Controller
         if  ( Auth::check() )
             return redirect()->intended('profile');
 
-        return view('pages.register');
+        return view('pages.home.register');
     }
 
     /** POST REGISTER */

@@ -8,37 +8,7 @@
             <div class="modal-body clearfix">
                 <div class="text-left">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                       <div class="widget clearfix">
-                            <div class="title">
-                                <h3>{{ trans('common.login') }}</h3>
-                            </div>
-                            <form id="loginform" method="post" name="loginform" action="{{ url('/login') }}">
-                                {!! csrf_field() !!}
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                        <input type="text" class="form-control" placeholder="{{ trans('auth.ph_username_email') }}" name="username">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                        <input type="password" class="form-control" placeholder="{{ trans('auth.ph_password') }}" name="password">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="checkbox">
-                                        <label> 
-                                            <input type="checkbox" name="remember"> {{ trans('common.remember') }}!
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="{{ trans('auth.btn_login') }}">
-                                </div>
-                            </form>
-                            </div>
-                        </div><!-- end login -->
+                       @include('partials.loginform')
                     </div>
                 </div>
             </div>
@@ -56,40 +26,7 @@
             <div class="modal-body clearfix">
                 <div class="text-left">
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="widget clearfix">
-                            <div class="title">
-                                <h3>{{ trans('common.register') }}</h3>
-                            </div>
-                            <form id="registerform" method="post" name="registerform" action="{{ url('/register') }}">
-                                {!! csrf_field() !!}
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="{{ trans('auth.ph_username') }}" name="username">
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="{{ trans('auth.ph_display_name') }}" name="display_name">
-                                </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control" placeholder="{{ trans('auth.ph_email') }}" name="email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="{{ trans('auth.ph_password') }}" name="password">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="{{ trans('auth.ph_confirm_password') }}" name="confirm_password">
-                                </div>
-                                <div class="form-group">
-                                    <label class="radio-inline">
-                                        <input type="radio" name="entity_type" value="0"> {{ trans('auth.ph_individual_entity') }}
-                                    </label>
-                                    <label class="radio-inline">
-                                        <input type="radio" name="entity_type" value="1"> {{ trans('auth.ph_legal_entity') }}
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="{{ trans('auth.btn_send') }}">
-                                </div>
-                            </form>
-                        </div><!-- end register -->
+                        @include('partials.registerform')
                     </div>
                 </div>
             </div>
@@ -107,7 +44,7 @@
                         <li><a data-placement="bottom" data-toggle="tooltip" data-original-title="{{ trans('common.bulgarian') }}" title="" href="{{ url('/lang/bg') }}"><img alt="bg" src="{{ asset('/assets/home/images/flags/bg.png') }}"></a></li>
                         <li><a data-placement="bottom" data-toggle="tooltip" data-original-title="{{ trans('common.english') }}" title="" href="{{ url('/lang/en') }}"><img alt="en" src="{{ asset('/assets/home/images/flags/en.png') }}"></a></li>
                     </ul><!-- end flags -->
-                    @if(!Auth::check())
+                    @unless(Auth::check())
                         <ul class="topmenu pull-right">
                             <li>
                                 <a href="#login" data-toggle="modal"><i class="fa fa-sign-in"></i> {{ trans('common.login') }}</a> 
@@ -125,10 +62,10 @@
                                 </a> 
                             </li>
                             <li>
-                                <a href="/logout"><i class="fa fa-sign-out"></i> {{ trans('common.logout') }}</a> 
+                                <a href="{{ url('/logout') }}"><i class="fa fa-sign-out"></i> {{ trans('common.logout') }}</a> 
                             </li>
                         </ul><!-- topmenu -->
-                    @endif
+                    @endunless
                 </div><!-- end marketing -->
             </div><!-- end col-lg-6 -->
     	</div><!-- end row -->
