@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Profile;
-use App\User;
+use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-
-    public function __construct() {
+    public function __construct()
+    {
         return redirect('/profile/dashboard');
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,14 +22,16 @@ class ProfileController extends Controller
         return view('profile');
     }
 
-    public function settings() {
+    public function settings()
+    {
         return view('pages.profile.settings');
     }
 
-    public function about() {
+    public function about()
+    {
         $data = Profile::find(auth()->user()->get('account_id'));
 
-        /**
+        /*
         TODO: Довърши страницата about
         */
         return view('pages.profile.about')->with('data', $data);
@@ -51,7 +50,8 @@ class ProfileController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  Request  $request
+     * @param Request $request
+     *
      * @return Response
      */
     public function store(Request $request)
@@ -62,7 +62,8 @@ class ProfileController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function show($id)
@@ -73,7 +74,8 @@ class ProfileController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function edit($id)
@@ -84,8 +86,9 @@ class ProfileController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return Response
      */
     public function update(Request $request, $id)
@@ -96,7 +99,8 @@ class ProfileController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return Response
      */
     public function destroy($id)
