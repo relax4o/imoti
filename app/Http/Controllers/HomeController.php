@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 class HomeController extends Controller
 {
     /**
@@ -19,8 +14,7 @@ class HomeController extends Controller
         return view('home');
     }
 
-
-    /**
+    /*
     TODO: Рутирай и използвай контролера за вход
     Направи база данни за регистрацията и метод за вход.
 
